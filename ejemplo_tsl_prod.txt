@@ -1,0 +1,75 @@
+"
+    00
+    0
+    1
+    331
+    29621161
+    9742
+    20250708
+    20250707
+    010911
+    1
+    1930730319307303
+    PVT
+    BLT
+    2550
+    0
+        <TED version="1.0">
+            <DD>
+                <RE>76596620-5</RE>
+                <TD>39</TD>
+                <F>29621161</F>
+                <FE>2025-07-08</FE>
+                <RR>66666666-6</RR>
+                <RSR>Desconocido</RSR>
+                <MNT>2550</MNT>
+                <IT1>HAR.SP.LIND.1KG</IT1>
+                <CAF version="1.0">
+                    <DA>
+                        <RE>76596620-5</RE>
+                        <RS>SOCIEDAD COMERCIALIZADORA DE PRODUCTOS A</RS>
+                        <TD>39</TD>
+                        <RNG>
+                            <D>29612501</D>
+                            <H>29622500</H>
+                        </RNG>
+                        <FA>2025-05-23</FA>
+                        <RSAPK>
+                            <M>tLJeBrrj4AQiQaf89cFdN4lDKEBTxHOYoEtOIBo1b5PMGKJWmDSLh4C3+8hOZtdHdTFxm7mx2mkTTTj7a+Ek3Q==</M>
+                            <E>Aw==</E>
+                        </RSAPK>
+                        <IDK>300</IDK>
+                    </DA>
+                    <FRMA algoritmo="SHA1withRSA">cj6pKvDgg7ac2LGI1keQKgZnAhLJZ6DmPIb+NdbgvIV7iTUxFZZrdt4GWFhOo7fSgFiDwqbxX/OxmRlaXrujFw==</FRMA>
+                </CAF>
+                <TSTED>2025-07-08T01:09:11</TSTED>
+            </DD>
+            <FRMT algoritmo="SHA1withRSA">ApafrJyt+n8AFfEKUyvazVyIb5gnOtN7ezUeh4ewUaVYMZ7BibgYycfsS3WHkfPz8+gkOf+arZWB6Slxf8S52Q==</FRMT>
+        </TED>
+    0",
+"
+    03
+    1
+    01
+    90
+    40700
+", # Impuesto a la transaccion como el IVA
+"
+    01
+    7802613000148
+    1
+    10085000
+    85
+    0
+    1
+    0
+    0
+    850
+",
+"030019013600", # Impuesto al producto como el impuesto a los refrescos
+"017802613000148110085000850100850",
+"030019013600", # Impuesto al producto como el impuesto a los refrescos
+"017802613000148110085000850100850",
+"030019013600", # Impuesto al producto como el impuesto a los refrescos
+"040130000000000450000000000000ON00000",
+"9903666666666SN"

@@ -1,0 +1,13 @@
+GET https://api-pos-mono-production.up.railway.app/api/v1/setup/check-users
+Content-Type: application/json
+
+
+###
+
+POST https://api-pos-mono-production.up.railway.app/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "emilys",
+  "password": "emilyspass"
+}
