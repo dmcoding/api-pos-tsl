@@ -193,7 +193,7 @@ curl -X POST "http://localhost:8000/transactions/" \
   -d '{
     "store_id": "769f390e-295f-4c3f-99f9-8eaa9b3d406f",  # Store ID válido
     "pos_id": "POS-001",  # Cambia el ID del POS según tu caso
-    "transaction_type": "SALE",  # Cambia el tipo de transacción si es necesario
+    "transaction_type": "PVT",  # Cambia el tipo de transacción si es necesario
     "transaction_number": f"TRX-{datetime.now().strftime('%Y%m%d%H%M%S')}",  # Número de transacción único basado en timestamp
     "transaction_date": datetime.now().isoformat(),  # Fecha actual en formato ISO8601
     "total_amount": 10.0,  # Agrega el total de la transacción

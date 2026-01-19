@@ -71,7 +71,7 @@ class User(UserBase):
 class ProductBase(BaseModel):
     title: str
     description: Optional[str] = None
-    category: Optional[str] = None
+    category_id: Optional[int] = Field(None, alias="categoryId")
     price: float
     discount_percentage: float = Field(0.0, alias="discountPercentage")
     discount_money: float = Field(0.0, alias="discountMoney")
@@ -89,7 +89,7 @@ class ProductBase(BaseModel):
 class ProductCreate(BaseModel):
     title: str
     description: Optional[str] = None
-    category: Optional[str] = None
+    category_id: Optional[int] = Field(None, alias="categoryId")
     price: float
     discount_percentage: float = 0.0
     discount_money: float = 0.0
@@ -105,7 +105,7 @@ class ProductCreate(BaseModel):
 class ProductUpdate(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
-    category: Optional[str] = None
+    category_id: Optional[int] = Field(None, alias="categoryId")
     price: Optional[float] = None
     discount_percentage: Optional[float] = None
     discount_money: Optional[float] = None
@@ -124,6 +124,7 @@ class Product(ProductBase):
     id: int
     created_at: datetime = Field(alias="createdAt")
     updated_at: Optional[datetime] = Field(None, alias="updatedAt")
+    category_id: Optional[int] = Field(None, alias="categoryId")
 
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 
@@ -179,7 +180,8 @@ class TransactionPayment(TransactionPaymentBase):
 class TransactionBase(BaseModel):
     store_id: Optional[str] = Field(None, alias="storeId")
     pos_id: Optional[str] = Field(None, alias="posId")
-    transaction_type: str = Field("SALE", alias="transactionType")
+    transaction_type: str = Field(alias="transactionType")
+    document_type: str = Field(alias="documentType")
     transaction_number: Optional[str] = Field(None, alias="transactionNumber")
     transaction_date: Optional[datetime] = Field(None, alias="transactionDate")
     total_amount: float = Field(alias="totalAmount")
@@ -190,7 +192,8 @@ class TransactionBase(BaseModel):
 class TransactionCreate(BaseModel):
     store_id: Optional[str] = None
     pos_id: Optional[str] = None
-    transaction_type: str = "SALE"
+    transaction_type: str
+    document_type: str
     transaction_number: Optional[str] = None
     transaction_date: Optional[datetime] = None
     total_amount: float
@@ -216,6 +219,27 @@ class Transaction(TransactionBase):
     payments: List[TransactionPayment]
     created_at: datetime = Field(alias="createdAt")
     updated_at: Optional[datetime] = Field(None, alias="updatedAt")
+
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
+    
+
+class TransactionTSLRequest(TransactionBase):
+    id: int
+    user_id: int
+    store_id: Optional[str] = None
+    pos_id: Optional[str] = None
+    transaction_type: str
+    document_type: str
+    transaction_number: str
+    transaction_date: datetime
+    total_amount: float
+    customer_external_id: Optional[str] = None
+    status: str = "completed"
+    notes: Optional[str] = None
+
+ 
+    items: List[TransactionItem]
+    payments: List[TransactionPayment]
 
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 

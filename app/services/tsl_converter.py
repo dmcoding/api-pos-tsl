@@ -61,6 +61,12 @@ class TSLConverter:
     
     _value_converter = None
     
+    _data_transaction_info = None
+    
+    def __init__(self):
+        self._data_transaction_info = []
+        self._value_converter = ""
+    
     @property
     def value_converter(self):
         return self._value_converter
@@ -73,8 +79,8 @@ class TSLConverter:
             "TipoReg": "00",
             "Pais": "0", # 0 = Chile
             "Origen": "1", # 1 = Tienda
-            "Local": "33", # TODO: Definir el local (se obtiene de la api o se pondra hardcodeado en algun archivo de configuracion)
-            "POS": "1", # TODO: Definir la caja (se obtiene de la api o se pondra hardcodeado en algun archivo de configuracion)
+            "Local": None,
+            "POS": None,
             "NroDoc": 12345, # TODO: Definir
             "NumTrx": None, # Se obtiene del json de la transaccion
             "Fecha": None, # Se obtiene del json de la transaccion Formato YYYYMMDD
@@ -84,16 +90,35 @@ class TSLConverter:
             "Cajero": "12345", # TODO: Definir el valor del cajero (se obtiene de la api o se pondra hardcodeado en algun archivo de configuracion)
             "Vendedor": None,
             "TipoTrx": None,
-            "TipoDoc": None, # TODO: Definir el tipo de documento (se obtiene del json de la transaccion)
+            "StipoTrx": "", # TODO: Definir el tipo de transaccion (se obtiene del json de la transaccion)
+            "TipoDoc": None,
             "Total": None,
+            "NombreClte": "", # TODO: Definir el valor del nombre del cliente (se obtiene del json de la transaccion)
+            "Rut": "", # TODO: Definir el valor del rut del cliente (se obtiene del json de la transaccion)
+            "Direccion": "", # TODO: Definir el valor de la direccion del cliente (se obtiene del json de la transaccion)
+            "Comuna": "", # TODO: Definir el valor de la comuna del cliente (se obtiene del json de la transaccion)
+            "Ciudad": "", # TODO: Definir el valor de la ciudad del cliente (se obtiene del json de la transaccion)
+            "Telefono": "", # TODO: Definir el valor del telefono del cliente (se obtiene del json de la transaccion)
+            "GiroClte": "", # TODO: Definir el valor del giro del cliente (se obtiene del json de la transaccion)
+            "LocalDest": "0", # TODO: Definir el valor del local de destino (se obtiene del json de la transaccion)
+            "NroDocOrigen": "", # TODO: Definir el valor del numero de documento de origen (se obtiene del json de la transaccion)
+            "LocalOrigen": "", # TODO: Definir el valor del local de origen (se obtiene del json de la transaccion)
+            "PosOrigen": "", # TODO: Definir el valor del punto de origen (se obtiene del json de la transaccion)
+            "FechaOrigen": "", # TODO: Definir el valor de la fecha de origen (se obtiene del json de la transaccion)
+            "NumTrxOrigen": "", # TODO: Definir el valor del numero de transaccion de origen (se obtiene del json de la transaccion)
+            "CodTed": "<TED></TED>", # TODO: Definir el valor del codigo de transaccion electronica (se obtiene del json de la transaccion)
+            "CodSupervisor": "", # TODO: Definir el valor del codigo del supervisor (se obtiene del json de la transaccion)
+            "Region": "", # TODO: Definir el valor de la region (se obtiene del json de la transaccion)
+            "Mail": "", # TODO: Definir el valor del correo electronico (se obtiene del json de la transaccion)
+            "RutSolicita": "", # TODO: Definir el valor del rut del solicitante (se obtiene del json de la transaccion)
         },
         TSLConverterSubstringType.PRODUCTOS: {
             "TipoReg": "01",
             "CodProd": None,
-            "Categoría": "cat_producto", # TODO: Definir el valor de la categoria
+            "Categoria": None, # TODO: Definir el valor de la categoria
             "Cantidad": None,
-            "BrutoPositivo": 10000.000, # TODO: Definir el valor de la lista de precios
-            "BrutoNegativo": -10000.000,  # TODO: Definir el valor de la lista de precios
+            "BrutoPositivo": None,
+            "BrutoNegativo": 0,  # TODO: Definir el valor de la lista de precios
             "Unidades": 0, # TODO: Definir el valor de las unidades (0 = Unidades, 1 = Gramos, 2 = Litros)
             "Total": None,
             "TipoProducto": "1", # TODO: Definir el tipo de producto
@@ -121,8 +146,28 @@ class TSLConverter:
             "TipoReg": "04",
             "CodFP": None,
             "Monto": None,
-            "CodMoneda": 1, #TODO: Definir la moneda
+            "CodMoneda": 0, #TODO: Definir la moneda
+            "MontoCambio": 0, #TODO: Definir el monto de cambio
+            "TipoCambio": 0, #TODO: Definir el tipo de cambio
+            "Vuelto": 0, #TODO: Definir el vuelto
+            "Donacion": 0, #TODO: Definir si la transaccion es una donacion
+            "Numcta": 0, #TODO: Definir el numero de cuenta
+            "RutCli": 0, #TODO: Definir el rut del cliente
+            "FonoCli": 0, #TODO: Definir elfono del cliente
+            "CodBco": 0, #TODO: Definir el codigo de banco
+            "Plaza": 0, #TODO: Definir la plaza
+            "NumSerie": 0, #TODO: Definir el numero de serie
+            "Fvenc": 0, #TODO: Definir la fecha de vencimiento
+            "CodAutor": 0, #TODO: Definir el codigo de autorizacion
+            "NumClte": 0, #TODO: Definir el numero de cliente
+            "CodDonac": 0, #TODO: Definir el codigo de donacion
             "Anulado": 0, #TODO: Definir si el pago esta anulado
+            "Online": "ON", #TODO: Definir si la transaccion es online
+            "NroCuotas": 0, #TODO: Definir el numero de cuotas
+            "Recargo1": 0, #TODO: Definir el recargo 1
+            "Recargo2": 0, #TODO: Definir el recargo 2
+            "Recargo3": 0, #TODO: Definir el recargo 3
+            "Recargo4": 0, #TODO: Definir el recargo 4
         },
         TSLConverterSubstringType.EXCEPCIONES: {
             "TipoReg": "05",
@@ -203,7 +248,7 @@ class TSLConverter:
     }
     
     
-    _data_transaction_info = []
+    
 
     def serialize_transaction(self):
         values = [
@@ -214,14 +259,14 @@ class TSLConverter:
     
 
     def assign_value_from_transaction(self, transaction: dict, assign_keys: dict, type_substring: TSLConverterSubstringType) -> dict:
-        _data_transaction_temporal = self.data_transaction[type_substring]
+        _data_transaction_temporal = {**self.data_transaction[type_substring]}
         
         for to_key, from_key in assign_keys.items():
             if from_key not in transaction:
-                raise ValueError(f"Key {to_key} not found in transaction")
+                raise ValueError(f"Key {from_key} not found in transaction")
             
             if to_key not in self.data_transaction[type_substring]:
-                raise ValueError(f"Key {from_key} not found in {type_substring}")
+                raise ValueError(f"Key {to_key} not found in {type_substring}")
             
             _data_transaction_temporal[to_key] = transaction[from_key]
             

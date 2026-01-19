@@ -200,3 +200,6 @@ static/uploads/
 .cache/
 __pycache__/
 .pytest_cache/
+
+# TSL files
+tsl_files/
